@@ -1,19 +1,18 @@
+Futuristic Weather Dashboard Documentation
 
-#  Futuristic Weather Dashboard Documentation
-
-## Overview
+Overview
 
  Futuristic Weather Dashboard is a desktop application developed in Python using PyQt5. It provides real-time weather information and forecasts. The application is designed with a futuristic theme and supports both metric and imperial units.
 
-## Project Structure
+Project Structure
 
 The project is divided into three main modules:
 
-1. **Main Module (`main.py`)**: The entry point of the application.
-2. **Weather API Module (`weather_api.py`)**: Handles interactions with the OpenWeatherMap API.
-3. **GUI Module (`weather_gui.py`)**: Manages the graphical user interface.
+1. Main Module (`main.py`): The entry point of the application.
+2. Weather API Module (`weather_api.py`): Handles interactions with the OpenWeatherMap API.
+3. GUI Module (`weather_gui.py`): Manages the graphical user interface.
 
-## Features
+ Features
 
 - Fetches and displays current weather data: temperature, humidity, wind speed, pressure, sunrise, and sunset times.
 - Provides a 3-day weather forecast.
@@ -21,43 +20,43 @@ The project is divided into three main modules:
 - Validates user input for city names.
 - Handles various API-related and network errors gracefully.
 
-## Challenges and Solutions
+ Challenges and Solutions
 
-### API Integration
+ API Integration
 
-- **Challenge**: Integrating with the OpenWeatherMap API and handling its responses.
-- **Solution**: Developed a dedicated `WeatherAPI` class for API interaction, encapsulating all the logic for fetching weather data.
+- Challenge: Integrating with the OpenWeatherMap API and handling its responses.
+- Solution: Developed a dedicated `WeatherAPI` class for API interaction, encapsulating all the logic for fetching weather data.
 
-### User Interface
+User Interface
 
-- **Challenge**: Creating a user-friendly and aesthetically pleasing interface.
-- **Solution**: Used PyQt5 to design a GUI with a futuristic theme. Employed `QGridLayout` for structured layout and custom stylesheets for a unique look and feel.
+- Challenge: Creating a user-friendly and aesthetically pleasing interface.
+- Solution: Used PyQt5 to design a GUI with a futuristic theme. Employed `QGridLayout` for structured layout and custom stylesheets for a unique look and feel.
 
-### Data Validation and Error Handling
+ Data Validation and Error Handling
 
-- **Challenge**: Validating user input and handling various potential errors (e.g., network issues, API errors).
-- **Solution**: Implemented checks for valid city names and robust error handling in the `fetch_weather` method, displaying informative messages to the user.
+- Challenge: Validating user input and handling various potential errors (e.g., network issues, API errors).
+- Solution: Implemented checks for valid city names and robust error handling in the `fetch_weather` method, displaying informative messages to the user.
 
-### Modular Design
+ Modular Design
 
-- **Challenge**: Organizing a growing codebase for maintainability and clarity.
-- **Solution**: Adopted a modular approach, separating the application into different modules based on functionality.
+- Challenge: Organizing a growing codebase for maintainability and clarity.
+- Solution: Adopted a modular approach, separating the application into different modules based on functionality.
 
-## Installation and Usage
+ Installation and Usage
 
-### Requirements
+ Requirements
 
 - Python 3
 - PyQt5
 - Requests library
 
-### Setup
+ Setup
 
 1. Clone the repository or download the source code.
 2. Install required Python packages: `PyQt5` and `requests`.
 3. Obtain an API key from OpenWeatherMap and set it as an environment variable (`OPENWEATHER_API_KEY`).
 
-### Running the Application
+ Running the Application
 
 Execute the `main.py` script to launch the application:
 
@@ -65,7 +64,7 @@ Execute the `main.py` script to launch the application:
 python main.py
 ```
 
-## Future Enhancements
+ Future Enhancements
 
 - Adding more detailed weather forecasts, including graphical representations.
 - Implementing user settings for API key configuration.
@@ -74,7 +73,7 @@ python main.py
 
 ---
 
-## Conclusion
+ Conclusion
 
  Futuristic Weather Dashboard showcases the application of Python and PyQt5 in creating a functional and visually appealing desktop application. The project's modular structure and clear separation of concerns between API interaction and GUI management make it a robust and scalable solution.
 
