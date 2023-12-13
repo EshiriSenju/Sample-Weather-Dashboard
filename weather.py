@@ -83,6 +83,12 @@ class WeatherApp(QWidget):
         self.sunset_label = QLabel('Sunset: ')
         self.layout.addWidget(self.sunset_label, 3, 2)
 
+        self.visibility_label = QLabel('Viaibility: ')
+        self.layout.addWidget(self.visibility_label, 4, 0)
+
+        self.cloudiness_label = QLabel('Cloudiness: ')
+        self.layout.addWidget(self.cloudiness_label, 4, 1)
+
         # Set main window properties
         self.setLayout(self.layout)
         self.setWindowTitle('Futuristic Weather Dashboard')
@@ -97,6 +103,8 @@ class WeatherApp(QWidget):
             response = requests.get(url)
             response.raise_for_status()
             weather_data = response.json()
+            visibility = weather_data.get('visibility', 'N/A')
+            cloudiness = weather_data.get('clouds', {}).get("all","N/A")
 
             self.weather_label.setText(f"Weather: {weather_data['weather'][0]['description'].capitalize()}")
             self.temperature_label.setText(f"Temperature: {weather_data['main']['temp']} °C")
@@ -107,6 +115,9 @@ class WeatherApp(QWidget):
             sunset_time = datetime.fromtimestamp(weather_data['sys']['sunset']).strftime('%H:%M')
             self.sunrise_label.setText(f"Sunrise: {sunrise_time}")
             self.sunset_label.setText(f"Sunset: {sunset_time}")
+            self.visibility_label.setText(f"Visibilty: {visibility} m" if visibility!= 'N/A' else "Visibility: N/A")
+            self.cloudiness_label.setText(f"Cloudiness: {cloudiness}" if cloudiness!= 'N/A' else "Cloudiness: N/A")
+
         except requests.exceptions.HTTPError as errh:
             QMessageBox.warning(self, 'Error', f"HTTP Error: {errh}")
         except requests.exceptions.ConnectionError as errc:
