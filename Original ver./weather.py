@@ -89,17 +89,38 @@ class WeatherApp(QWidget):
         self.cloudiness_label = QLabel('Cloudiness: ')
         self.layout.addWidget(self.cloudiness_label, 4, 1)
 
+        self.unit_switch = QPushButton('Switch to Imperial', self)
+        self.unit_switch.clicked.connect(self.toggle_units)
+        self.layout.addWidget(self.unit_switch, 4, 2)
+        self.is_metric = True  # Flag to track the unit state
+        self.forecast_label = QLabel('Forecast: ')
+        self.layout.addWidget(self.forecast_label, 5, 0, 1, 3)  # Adjust position as needed
+
+
         # Set main window properties
         self.setLayout(self.layout)
         self.setWindowTitle('Futuristic Weather Dashboard')
         self.setGeometry(300, 300, 600, 400)  # Window size
 
+    def toggle_units(self):
+            self.is_metric = not self.is_metric
+            self.unit_switch.setText('Switch to Imperial' if self.is_metric else 'Switch to Metric')
+            self.fetch_weather()  # Refresh weather data with new units
+
     def fetch_weather(self):
         city = self.city_entry.text()
+        if not city.isalpha():
+            QMessageBox.warning(self, 'Input Error', 'Please enter a valid city name.')
+            return
+
         api_key = os.getenv('OPENWEATHER_API_KEY')
-        url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
+        units = 'metric' if self.is_metric else 'imperial'
+        url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units={units}"
 
         try:
+            response = requests.get(url)
+            response.raise_for_status()
+            weather_data = response.json()
             response = requests.get(url)
             response.raise_for_status()
             weather_data = response.json()
@@ -117,6 +138,7 @@ class WeatherApp(QWidget):
             self.sunset_label.setText(f"Sunset: {sunset_time}")
             self.visibility_label.setText(f"Visibilty: {visibility} m" if visibility!= 'N/A' else "Visibility: N/A")
             self.cloudiness_label.setText(f"Cloudiness: {cloudiness}" if cloudiness!= 'N/A' else "Cloudiness: N/A")
+            self.fetch_forecast(city)
 
         except requests.exceptions.HTTPError as errh:
             QMessageBox.warning(self, 'Error', f"HTTP Error: {errh}")
@@ -126,7 +148,37 @@ class WeatherApp(QWidget):
             QMessageBox.warning(self, 'Error', f"Timeout Error: {errt}")
         except requests.exceptions.RequestException as err:
             QMessageBox.warning(self, 'Error', f"Error: {err}")
+        except requests.exceptions.HTTPError as errh:
+            if errh.response.status_code == 404:
+                QMessageBox.warning(self, 'Error', f"City '{city}' not found.")
+            else:
+                QMessageBox.warning(self, 'HTTP Error', str(errh))
+        except requests.exceptions.ConnectionError:
+            QMessageBox.warning(self, 'Error', 'Connection Error. Please check your internet connection.')
 
+    def fetch_forecast(self, city):
+        api_key = os.getenv('OPENWEATHER_API_KEY')
+        forecast_url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units=metric"
+        
+        try:
+            forecast_response = requests.get(forecast_url)
+            forecast_response.raise_for_status()
+            forecast_data = forecast_response.json()
+
+            # Process and display the forecast data
+            # This is a simple example, you may want to display more details
+            forecast_text = "3-Day Forecast:\n"
+            for entry in forecast_data['list'][:3]:  # Just taking the first 3 entries as an example
+                date = datetime.fromtimestamp(entry['dt']).strftime('%Y-%m-%d')
+                temp = entry['main']['temp']
+                description = entry['weather'][0]['description']
+                forecast_text += f"{date}: {temp}°C, {description}\n"
+
+            self.forecast_label.setText(forecast_text)
+
+        except requests.exceptions.RequestException as e:
+            print("Error fetching forecast:", e)
+            
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = WeatherApp()
