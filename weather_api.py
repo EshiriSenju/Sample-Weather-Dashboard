@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 
+
 class WeatherAPI:
     def __init__(self, api_key):
         self.api_key = api_key
@@ -16,4 +17,3 @@ class WeatherAPI:
         forecast_response = requests.get(forecast_url)
         forecast_response.raise_for_status()
         return forecast_response.json()
-
