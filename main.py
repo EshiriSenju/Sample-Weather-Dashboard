@@ -6,7 +6,7 @@ import os
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ap = WeatherAPI(api_key=os.getenv('OPENWEATHER_API_KEY'))
+    api = WeatherAPI(api_key=os.getenv('OPENWEATHER_API_KEY'))
     ex = WeatherApp(api)
     ex.show()
     sys.exit(app.exec_())
