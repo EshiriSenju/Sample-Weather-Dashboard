@@ -1,0 +1,31 @@
+Continuous Integration (CI) Pipeline
+Overview
+
+The Futuristic Weather Dashboard project utilizes a CI pipeline via GitHub Actions to ensure code quality and consistency with each commit. The CI pipeline automates the process of linting code, checking code formatting, and validating dependencies for security vulnerabilities.
+Pipeline Features
+
+    Automated Linting: The pipeline uses flake8 to identify and report on syntax errors, undefined names, and style issues.
+    Code Formatting Check: Utilizing black, the pipeline ensures consistent code formatting across the project.
+    Dependency Security Check: With safety, the pipeline scans Python dependencies for known security vulnerabilities.
+
+Workflow
+
+    The CI pipeline is triggered on every push and pull request to the main branch.
+    It runs on an Ubuntu latest environment with Python 3.8.
+
+Steps in the CI Pipeline
+
+    Set up Python Environment: Configures the Python environment specified for the project.
+    Install Dependencies: Installs all the required dependencies as listed in requirements.txt.
+    Lint with flake8: Runs flake8 to check for issues and enforce coding standards.
+    Code Formatting Check with black: Validates code formatting adheres to standard Python style guides.
+    Dependency Security Check with Safety: Scans installed Python packages for any known security vulnerabilities.
+
+CI Configuration
+
+The CI pipeline configuration is defined in the .github/workflows/weatherapp-ci.yml file. This YAML file specifies the actions to be taken by the pipeline upon triggering.
+Conclusion
+
+With the integration of a CI pipeline, the Futuristic Weather Dashboard project enhances its reliability and maintainability. The automated checks ensure a high standard of code quality, facilitating a robust development process.
+
+
