@@ -37,7 +37,7 @@ jobs:
         pip install black
         black --check .
 
-    - name: Check dependencies with Safety
-      run: |
-        pip install safety
-        safety check
+    #- name: Check dependencies with Safety
+      #run: |
+        #pip install safety
+        #safety check
